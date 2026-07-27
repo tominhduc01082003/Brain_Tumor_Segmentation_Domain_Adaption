@@ -1,0 +1,13 @@
+.venv/
+__pycache__/
+nnUNet_preprocessed/
+nnUNet_raw/
+nnUNet_results/
+Resource/
+Report/
+test_gt/
+test_image/
+test_predictions_baseline/
+test_predictions_DA/
+test_predictions_DA_post/
+BraTS_Peds.tar
