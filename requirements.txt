@@ -1,0 +1,47 @@
+﻿pip>=23.0
+setuptools>=65.0
+wheel
+
+torch==2.0.1+cu118
+torchvision==0.15.2+cu118
+torchaudio==2.0.2+cu118
+--extra-index-url https://download.pytorch.org/whl/cu118
+
+dynamic-network-architectures==0.2
+batchgenerators==0.25
+
+SimpleITK
+nibabel>=5.0.0
+medpy
+numpy>=1.23,<2.0
+scipy
+scikit-image
+pandas
+tqdm
+matplotlib
+monai
+seaborn
+blosc2==2.5.1
+# Cập nhật pip trước khi tải requirements.txt : python -m pip install --upgrade pip
+# Sau đó cài REGISTER ENTRYPOINT : pip install -e .
+# Gỡ acvl-utils và cài lại trong terminal bằng lệnh sau (nếu in ra là "crop_to_bbox OK" thì thành công):
+# pip uninstall -y acvl-utils
+# pip install acvl-utils==0.2.3 --no-deps
+# python -c "from acvl_utils.cropping_and_padding.bounding_boxes import crop_to_bbox; print('crop_to_bbox OK')"
+# B1. Chạy kiểm tra (nếu in ra đường dẫn thì ok):
+# Mỗi khi chạy xong .venv\Scripts\activate thì chạy lệnh này (Sửa cho đúng đường dẫn) :
+# $env:nnUNet_raw="E:\To_Duc\Computer_Vision\BraTS_Peds\nnUNet_raw"
+# $env:nnUNet_preprocessed="E:\To_Duc\Computer_Vision\BraTS_Peds\nnUNet_preprocessed"
+# $env:nnUNet_results="E:\To_Duc\Computer_Vision\BraTS_Peds\nnUNet_results"
+# echo $env:nnUNet_raw
+# echo $env:nnUNet_preprocessed
+# echo $env:nnUNet_results
+# B2. Tiền xử lý data từ dữ liệu thô :
+# nnUNetv2_plan_and_preprocess -d 1 --verify_dataset_integrity
+# Dòng 522 , 533 file predict_from_raw_data.py bỏ [0] ở  prediction = self.network(x)[0] và prediction += torch.flip(self.network(torch.flip(x, (*axes,)))[0], (*axes,))
+# Prediction baseline nnUnetv2 trên val fold 0 :nnUNetv2_predict -i val_images -o val_predictions -d Dataset001_BraTSAdult -c 3d_fullres -f 0 -chk checkpoint_best.pth
+# Prediction DA nnUnetv2 trên val fold 0 : nnUNetv2_predict -i val_images_DA -o val_predictions_DA -d Dataset142_BraTS_DA -c 3d_fullres -f 0 -chk checkpoint_best.pth
+# Dự đoán trên DA :nnUNetv2_predict -d Dataset142_BraTS_DA -i D:\To_Duc\Computer_Vision\BraTS_Peds\nnUNet_raw\Dataset004_BraTSPeds_Test\imagesTr -o D:\To_Duc\Computer_Vision\BraTS_Peds\scripts\Eval\preds -f 0 -tr nnUNetTrainerDA_500ep_noDS_4Convs -c 3d_fullres_bs4 -chk checkpoint_final.pth
+# nnUNetv2_predict -d Dataset142_BraTS_DA -i val_images -o preds -f 0 -tr nnUNetTrainerDA_500ep_noDS_4Convs -c 3d_fullres_bs4 -chk checkpoint_final.pth
+# nnUNetv2_find_best_configuration 142 -c 3d_fullres -tr nnUNetTrainerDA_500ep_noDS_4Convs -p nnUNetPlans -f 0 1 2 3 4
+# nnUNetv2_predict -i "ĐƯỜNG_DẪN_THƯ_MỤC_INPUT_TEST" -o "ĐƯỜNG_DẪN_THƯ_MỤC_OUTPUT_KẾT_QUẢ" -d 142 -c 3d_fullres_bs4 -tr nnUNetTrainerDA_500ep_noDS_4Convs -p nnUNetPlans -f 0 1 2 3 4
