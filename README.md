@@ -182,7 +182,7 @@ Brain-Tumor-Segmentation-UDA/
 ## Clone Repository
 
 ```bash
-git clone <YOUR_GITHUB_REPOSITORY_URL>
+git clone https://github.com/tominhduc01082003/Brain_Tumor_Segmentation_Domain_Adaption
 
 cd Brain-Tumor-Segmentation-UDA
 ```
