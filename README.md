@@ -432,7 +432,3 @@ Morphological Operations
 **Tô Minh Đức**
 
 Email: `ducto020803@gmail.com`
-
-Graduation Project — 2026
-
-**Topic:** Application of Artificial Intelligence in Brain Tumor Segmentation on MRI
